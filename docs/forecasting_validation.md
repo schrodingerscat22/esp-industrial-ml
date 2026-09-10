@@ -65,3 +65,10 @@ MAE persistence / XGBoost-PH: 1 min `1,550 / 0,983`, 3 min `2,321 / 1,385`,
 horyzoncie D2, natomiast P bez historii pyłu nie był stabilnie lepszy od
 persistence. To nadal wynik opisowy developmentu, bez łączenia foldów i bez
 wniosku operacyjnego.
+
+## Lokalne przeliczenie kontrolne: D3
+
+D3 zakończył wszystkie horyzonty przy opóźnieniu 0 s. MAE persistence /
+XGBoost-PH: 1 min `1,830 / 1,027`, 3 min `2,843 / 1,365`, 5 min
+`3,041 / 1,541` mg/Nm³. P bez historii pyłu ponownie nie poprawił stabilnie
+baseline’u; PH poprawił MAE dla każdego horyzontu. Wynik pozostaje opisowy.
