@@ -15,6 +15,12 @@ model z historią pyłu RMSE i MAE przy rappingu; szczegóły w model_validation
 Pełny etap publikacyjnej walidacji nadal wymaga
 nowego okresu testowego i uzgodnienia dostępności sygnałów z instalacją.
 
+Kolejny etap został zaprojektowany w `forecasting_methodology.md`: direct
+forecasting pyłu 1/3/5 min, osobne cele prognozy ciągłej i wczesnego ostrzegania,
+warianty H/P/PH, rolling-origin z purge oraz nowy zamrożony holdout. Metodologia
+ma zostać wdrożona na Terra medium zgodnie z sekcją handoff; jeszcze jej nie
+implementowano ani nie uruchamiano.
+
 ## 1. Zamknięcie kontraktu danych i celu predykcji
 
 - Uzgodnić online nowcasting, prognozę o konkretnym horyzoncie i/lub soft sensor

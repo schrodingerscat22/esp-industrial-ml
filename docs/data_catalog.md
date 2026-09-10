@@ -7,6 +7,8 @@
 > retained unchanged. Rapping masks must be recomputed with timestamp/gap rules.
 > The subsequent model audit rebuilds features from dataset_clean and writes only
 > to `data/processed/audit_v3/`. See `model_audit.md` and `model_validation.md`.
+> The next, not-yet-implemented 1/3/5-minute forecasting protocol is defined in
+> `forecasting_methodology.md`; its future outputs must use a new ignored version.
 
 This file describes processed datasets and intermediate files used in the ESP dust concentration prediction project.
 
