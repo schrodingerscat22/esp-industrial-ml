@@ -55,3 +55,13 @@ fold D1: 64,54 obserwowanej godziny, 23 045 originów dla 1 min, 23 021 dla
 XGBoost-PH wyniosło odpowiednio: 1 min `1,833 / 0,930`, 3 min `2,736 / 1,319`,
 5 min `2,914 / 1,462` mg/Nm³. Są to wyłącznie lokalne, opisowe wyniki jednego
 folda; nie są agregatem D1–D3 ani testem potwierdzającym.
+
+## Lokalne przeliczenie kontrolne: D2
+
+D2 z tym samym niepotwierdzonym opóźnieniem 0 s objęło 21 983 originy dla
+1 min, 21 947 dla 3 min i 21 911 dla 5 min; kontrola hashy wejść przeszła.
+MAE persistence / XGBoost-PH: 1 min `1,550 / 0,983`, 3 min `2,321 / 1,385`,
+5 min `2,476 / 1,537` mg/Nm³. PH poprawił MAE względem persistence na każdym
+horyzoncie D2, natomiast P bez historii pyłu nie był stabilnie lepszy od
+persistence. To nadal wynik opisowy developmentu, bez łączenia foldów i bez
+wniosku operacyjnego.
