@@ -46,3 +46,12 @@ R², MASE, skill względem persistence, obcięcia predykcji, stratyfikacje i
 opisowy bootstrap dni dla okresu legacy. Brak potwierdzonej dostępności tagów,
 brak nowego holdoutu i mała liczba niezależnych dni wykluczają twierdzenia
 operacyjne lub publikacyjne.
+
+## Lokalne przeliczenie kontrolne: D1
+
+Przeliczenie z opóźnieniem pyłomierza 0 s (`availability_unverified`) objęło
+fold D1: 64,54 obserwowanej godziny, 23 045 originów dla 1 min, 23 021 dla
+3 min i 22 997 dla 5 min. Kontrola hashy wejść przeszła. MAE persistence /
+XGBoost-PH wyniosło odpowiednio: 1 min `1,833 / 0,930`, 3 min `2,736 / 1,319`,
+5 min `2,914 / 1,462` mg/Nm³. Są to wyłącznie lokalne, opisowe wyniki jednego
+folda; nie są agregatem D1–D3 ani testem potwierdzającym.
