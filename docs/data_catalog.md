@@ -1,5 +1,11 @@
 # Data catalog
 
+> Status after the 2026-09-10 audit: numerical findings and model scores below
+> are historical v1 results, not confirmed results under the corrected methodology.
+> See `methodology_audit.md`, `audit_validation.md` and `research_plan.md`.
+> Corrected local outputs are in ignored `data/processed/audit_v2/`; v1 files were
+> retained unchanged. Rapping masks must be recomputed with timestamp/gap rules.
+
 This file describes processed datasets and intermediate files used in the ESP dust concentration prediction project.
 
 ## 1. Clean datasets
