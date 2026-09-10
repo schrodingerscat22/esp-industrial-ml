@@ -80,3 +80,19 @@ Ostatni fold objął trzy horyzonty. MAE persistence / XGBoost-PH wyniosło:
 mg/Nm³. PH było lepsze od persistence na każdym horyzoncie; P było blisko
 persistence dla 1 min i słabsze dla 3/5 min. To ocena legacy na wcześniej
 dostępnych danych, bez statusu potwierdzającego.
+
+## Agregat developerski D1–D3 przy opóźnieniu 0 s
+
+PH poprawił MAE względem persistence w każdym z dziewięciu porównań
+fold × horyzont. Zakres MAE persistence / PH wyniósł: 1 min `1,550–1,833 /
+0,930–1,027`, 3 min `2,321–2,843 / 1,319–1,385`, 5 min `2,476–3,041 /
+1,462–1,541` mg/Nm³. Jest to spójny sygnał developerski, lecz nie zastępuje
+analizy opóźnienia pomiaru ani nowego holdoutu.
+
+## Plan analizy wrażliwości dostępności pyłomierza
+
+Każdy wariant `30`, `60` i `120` s uruchamiamy z tymi samymi foldami,
+horyzontami, parametrami i seedem co wariant 0 s. Wyniki trafiają do osobnych,
+ignorowanych katalogów lokalnych `data/processed/forecast_delay_<s>s/`, aby
+nie nadpisać poprzednich predykcji ani modeli. Warianty są analizą wrażliwości,
+nie wyborem najkorzystniejszego opóźnienia.

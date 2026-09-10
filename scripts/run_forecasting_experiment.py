@@ -132,12 +132,16 @@ def developer_gate(metrics: pd.DataFrame, horizons: tuple[int, ...]) -> list[dic
 
 
 def main() -> None:
+    global OUT
     parser = argparse.ArgumentParser()
     parser.add_argument("--fold", choices=[fold.name for fold in DEVELOPMENT_FOLDS], action="append")
     parser.add_argument("--horizon-seconds", choices=HORIZON_SECONDS, type=int, action="append")
     parser.add_argument("--measurement-delay-seconds", type=int, default=0)
+    parser.add_argument("--output-dir", type=Path, help="Local ignored output directory; defaults to forecast_v1.")
     args = parser.parse_args()
     delay_to_samples(args.measurement_delay_seconds)
+    if args.output_dir is not None:
+        OUT = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
 
     OUT.mkdir(exist_ok=True)
     input_paths = [
@@ -162,6 +166,7 @@ def main() -> None:
         "contract": "F1 direct forecast y(t+h), x(t) and dust up to y(t-delay) available at origin",
         "availability_unverified": True,
         "measurement_delay_seconds": args.measurement_delay_seconds,
+        "output_directory": str(OUT.relative_to(ROOT)),
         "horizons_seconds": selected_horizons,
         "folds": [fold.__dict__ for fold in selected_folds],
         "xgboost_parameters": XGB_PARAMS,
