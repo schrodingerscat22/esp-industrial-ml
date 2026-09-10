@@ -1,6 +1,7 @@
 # Metodologia prognozowania pyłu 1/3/5 min — projekt do wdrożenia
 
-Wersja: 0.1, 2026-09-10. Status: protokół zaprojektowany, jeszcze niewdrożony.
+Wersja: 0.2, 2026-09-10. Status: F1 wdrożone; lokalne przeliczenia są
+zapisywane poza Git. F2 pozostaje poza zakresem tego etapu.
 Kontynuacja audytów `methodology_audit.md`, `model_audit.md` i
 `model_validation.md`. Implementację należy wykonać na gałęzi
 `codex/methodology-audit`, używając Terra medium. Dane przemysłowe, predykcje,
@@ -143,6 +144,17 @@ Schemat cech powstaje wyłącznie z treningu danego folda. Kod powinien rozszerz
 Nie tworzymy 1164 cech bez kontroli. Raport zawiera liczbę cech w rodzinach,
 udział braków i stałość schematu między foldami. Cechy redundantne mogą zostać
 ograniczone po walidacji, bez zaglądania do przyszłego testu.
+
+### 5.1. Zamrożony katalog P dla F1 v1
+
+W pierwszym wykonaniu P używa wszystkich bieżących tagów, lagów 1/5/30 min,
+mean i std z okien 5/30 min oraz różnic 3/5 min dla tagów ciągłych. Stany,
+obserwowane starty i czas od startu wszystkich strzepywaczy pozostają w zbiorze.
+To świadomie ograniczony katalog, ustalony przed porównaniem wyników F1: chroni
+przed niekontrolowanym rozwinięciem cech dla 75 tagów i umożliwia odtwarzalne
+wykonanie na stanowisku developerskim. Pełny katalog H pozostaje zgodny z
+listą powyżej. Rozszerzenie P wymaga nowej wersji protokołu i walidacji bez
+użycia przyszłego holdoutu.
 
 ## 6. Modele i baseline’y
 
