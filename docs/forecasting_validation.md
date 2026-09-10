@@ -72,3 +72,11 @@ D3 zakończył wszystkie horyzonty przy opóźnieniu 0 s. MAE persistence /
 XGBoost-PH: 1 min `1,830 / 1,027`, 3 min `2,843 / 1,365`, 5 min
 `3,041 / 1,541` mg/Nm³. P bez historii pyłu ponownie nie poprawił stabilnie
 baseline’u; PH poprawił MAE dla każdego horyzontu. Wynik pozostaje opisowy.
+
+## Lokalne przeliczenie: legacy evaluation
+
+Ostatni fold objął trzy horyzonty. MAE persistence / XGBoost-PH wyniosło:
+1 min `1,499 / 0,846`, 3 min `2,272 / 1,092`, 5 min `2,429 / 1,282`
+mg/Nm³. PH było lepsze od persistence na każdym horyzoncie; P było blisko
+persistence dla 1 min i słabsze dla 3/5 min. To ocena legacy na wcześniej
+dostępnych danych, bez statusu potwierdzającego.
