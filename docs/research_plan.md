@@ -4,7 +4,16 @@ Stan: 2026-09-10. Kontynuować z gałęzi `codex/methodology-audit`.
 Najpierw przeczytać `methodology_audit.md` i `audit_validation.md`.
 Kod wspólny: `src/time_analysis.py`; lokalny manifest i wyniki:
 `data/processed/audit_v2/results.json`. Nie publikować danych ani outputów
-przemysłowych; nie nadpisywać raw lub istniejących v1. Brak zgody na push.
+przemysłowych; nie nadpisywać raw lub istniejących v1. Użytkownik następnie
+zezwolił na commit i push kodu, testów i dokumentacji na gałąź audytu.
+
+Kontynuacja 02/03: `model_audit.md`, `model_validation.md` i lokalne
+`data/processed/audit_v3/report.json`. Pipeline z funkcjami bez przecieku,
+wspólnymi podziałami i persistence jest zaimplementowany i przeliczony
+(14 testów, 2 walidacje kroczące, wspólny test). Persistence wygrywa MAE,
+model z historią pyłu RMSE i MAE przy rappingu; szczegóły w model_validation.md.
+Pełny etap publikacyjnej walidacji nadal wymaga
+nowego okresu testowego i uzgodnienia dostępności sygnałów z instalacją.
 
 ## 1. Zamknięcie kontraktu danych i celu predykcji
 

@@ -5,6 +5,8 @@
 > See `methodology_audit.md`, `audit_validation.md` and `research_plan.md`.
 > Corrected local outputs are in ignored `data/processed/audit_v2/`; v1 files were
 > retained unchanged. Rapping masks must be recomputed with timestamp/gap rules.
+> The subsequent model audit rebuilds features from dataset_clean and writes only
+> to `data/processed/audit_v3/`. See `model_audit.md` and `model_validation.md`.
 
 This file describes processed datasets and intermediate files used in the ESP dust concentration prediction project.
 
