@@ -81,6 +81,9 @@ mg/Nm³. PH było lepsze od persistence na każdym horyzoncie; P było blisko
 persistence dla 1 min i słabsze dla 3/5 min. To ocena legacy na wcześniej
 dostępnych danych, bez statusu potwierdzającego.
 
+Pełna tabela D1–D3 dla 0/30/60/120 s znajduje się w
+`docs/forecasting_delay_sensitivity.md`.
+
 ## Agregat developerski D1–D3 przy opóźnieniu 0 s
 
 PH poprawił MAE względem persistence w każdym z dziewięciu porównań
