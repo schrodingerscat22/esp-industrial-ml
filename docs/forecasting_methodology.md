@@ -1,7 +1,7 @@
 # Metodologia prognozowania pyłu 1/3/5 min — projekt do wdrożenia
 
-Wersja: 0.2, 2026-09-10. Status: F1 wdrożone; lokalne przeliczenia są
-zapisywane poza Git. F2 pozostaje poza zakresem tego etapu.
+Wersja: 0.3, 2026-09-11. Status: F1 i implementacja F2 wdrożone; lokalne
+przeliczenia są zapisywane poza Git. F2 nie ma jeszcze progu operacyjnego.
 Kontynuacja audytów `methodology_audit.md`, `model_audit.md` i
 `model_validation.md`. Implementację należy wykonać na gałęzi
 `codex/methodology-audit`, używając Terra medium. Dane przemysłowe, predykcje,

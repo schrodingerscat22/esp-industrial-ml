@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
+from sklearn.metrics import average_precision_score, brier_score_loss
 
 from src.time_analysis import STEP, coverage, segments, time_shift, validate_time
 
@@ -86,6 +87,41 @@ def point_metrics(y_true: pd.Series | np.ndarray, prediction: pd.Series | np.nda
         "R2": float(1 - np.sum(error**2) / total) if total else None,
         "MASE": float(absolute.mean() / mase_denominator) if mase_denominator and np.isfinite(mase_denominator) else None,
     }
+
+
+def warning_metrics(y_true: pd.Series | np.ndarray, probability: pd.Series | np.ndarray) -> dict[str, float | int | None]:
+    """Threshold-free F2 metrics; an operational alarm threshold is intentionally absent."""
+    y = np.asarray(y_true, dtype=int)
+    p = np.clip(np.asarray(probability, dtype=float), 0, 1)
+    if not len(y):
+        return {key: None for key in ("n", "positive_n", "positive_rate", "PR_AUC", "Brier")}
+    return {
+        "n": int(len(y)),
+        "positive_n": int(y.sum()),
+        "positive_rate": float(y.mean()),
+        "PR_AUC": float(average_precision_score(y, p)) if y.min() != y.max() else None,
+        "Brier": float(brier_score_loss(y, p)),
+    }
+
+
+def calibration_table(y_true: pd.Series | np.ndarray, probability: pd.Series | np.ndarray, bins: int = 10) -> pd.DataFrame:
+    """Observed event frequency by equal-width probability bins, including empty bins."""
+    y = np.asarray(y_true, dtype=int)
+    p = np.clip(np.asarray(probability, dtype=float), 0, 1)
+    edges = np.linspace(0, 1, bins + 1)
+    group = np.digitize(p, edges[1:-1], right=True)
+    rows = []
+    for number in range(bins):
+        mask = group == number
+        rows.append({
+            "bin": number,
+            "lower": float(edges[number]),
+            "upper": float(edges[number + 1]),
+            "n": int(mask.sum()),
+            "mean_probability": float(p[mask].mean()) if mask.any() else None,
+            "observed_rate": float(y[mask].mean()) if mask.any() else None,
+        })
+    return pd.DataFrame(rows)
 
 
 def rapping_window(df: pd.DataFrame, tag: str = "008B05154") -> pd.Series:

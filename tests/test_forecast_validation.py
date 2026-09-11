@@ -12,6 +12,8 @@ from src.forecast_validation import (
     rapping_window,
     strata,
     threshold_episode_starts,
+    warning_metrics,
+    calibration_table,
 )
 
 
@@ -63,6 +65,13 @@ class ForecastValidationTests(unittest.TestCase):
         data.loc[data.index[8:13], TARGET] = 50
         data = data.drop(data.index[10])
         self.assertEqual(threshold_episode_starts(data[TARGET], 40), 2)
+
+    def test_warning_metrics_and_calibration_are_threshold_free(self):
+        metrics = warning_metrics([0, 1, 1, 0], [0.1, 0.9, 0.6, 0.4])
+        self.assertEqual(metrics["positive_n"], 2)
+        self.assertGreater(metrics["PR_AUC"], 0.9)
+        table = calibration_table([0, 1], [0.0, 1.0], bins=2)
+        self.assertEqual(table["n"].sum(), 2)
 
 
 if __name__ == "__main__":

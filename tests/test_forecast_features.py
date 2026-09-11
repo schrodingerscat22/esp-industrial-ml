@@ -7,6 +7,7 @@ from src.forecast_features import (
     TARGET,
     clean_forecast_data,
     direct_target,
+    future_event_target,
     history_features,
     process_features,
 )
@@ -60,6 +61,17 @@ class ForecastFeatureTests(unittest.TestCase):
         frame.loc[frame.index[10], "process"] = np.nan
         clean = clean_forecast_data(frame, SCHEMA["inputs"])
         self.assertNotIn(frame.index[10], clean.index)
+
+    def test_future_event_requires_complete_window_and_excludes_current_value(self):
+        frame = source_frame(rows=30)
+        frame[TARGET] = 0.0
+        frame.loc[frame.index[0], TARGET] = 100
+        frame.loc[frame.index[6], TARGET] = 25
+        label = future_event_target(frame, 60, 20)
+        self.assertEqual(label.loc[frame.index[0]], 1.0)
+        self.assertEqual(label.loc[frame.index[20]], 0.0)
+        gapped = frame.drop(frame.index[3])
+        self.assertTrue(pd.isna(future_event_target(gapped, 60, 20).loc[frame.index[0]]))
 
 
 if __name__ == "__main__":

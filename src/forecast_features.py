@@ -167,6 +167,25 @@ def direct_target(df: pd.DataFrame, horizon_seconds: int) -> pd.Series:
     return pd.Series(values, index=df.index, name=f"target_{horizon_seconds}s", dtype="float32")
 
 
+def future_event_target(df: pd.DataFrame, horizon_seconds: int, threshold: float) -> pd.Series:
+    """Event label for max(y(t+10s), ..., y(t+h)) > threshold.
+
+    Every expected future point must be observed in the same continuous segment.
+    A partial future window is unknown (NaN), never a negative event.
+    """
+    if horizon_seconds not in HORIZON_SECONDS:
+        raise ValueError(f"Unsupported horizon: {horizon_seconds}")
+    validate_time(df)
+    samples = horizon_seconds // int(STEP.total_seconds())
+    future = pd.concat(
+        [time_shift(df[TARGET].astype("float32"), -step) for step in range(1, samples + 1)],
+        axis=1,
+    )
+    complete = future.notna().all(axis=1)
+    label = future.gt(threshold).any(axis=1).astype("float32")
+    return label.where(complete).rename(f"event_{horizon_seconds}s_gt_{threshold:g}")
+
+
 def feature_family_counts(columns: pd.Index) -> dict[str, int]:
     names = pd.Index(columns).astype(str)
     return {
