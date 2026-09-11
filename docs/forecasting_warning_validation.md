@@ -34,6 +34,10 @@ przez lukę telemetryczną. Krótki test integracyjny D1 (1 min, 20 mg/Nm³,
 opóźnienie procesu 30 s) zakończył się poprawnie; nie jest on pełną analizą
 wrażliwości ani wynikiem głównym.
 
+Domyślny przebieg F2 obejmuje wyłącznie foldy D1--D3. Historyczny
+`legacy_evaluation` wymaga jawnej opcji `--include-legacy` i nie należy do
+agregatu developerskiego.
+
 ## Lokalne przeliczenie kontrolne: D1--D3
 
 Wykonano 11 września 2026 na `dataset_clean.parquet`, tym samym zamrożonym

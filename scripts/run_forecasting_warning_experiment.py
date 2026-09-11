@@ -84,6 +84,7 @@ def main() -> None:
     parser.add_argument("--threshold", choices=ANALYTIC_THRESHOLDS, type=float, action="append")
     parser.add_argument("--measurement-delay-seconds", type=int, default=0)
     parser.add_argument("--process-availability-delay-seconds", type=int, default=0)
+    parser.add_argument("--include-legacy", action="store_true")
     parser.add_argument("--output-dir", type=Path)
     args = parser.parse_args()
     delay_to_samples(args.measurement_delay_seconds)
@@ -102,7 +103,12 @@ def main() -> None:
     history = history_features(source, args.measurement_delay_seconds)
     history_required = history.columns[~history.columns.str.contains("minutes_since_gt")]
     history_valid = history[history_required].notna().all(axis=1)
-    selected_folds = [fold for fold in DEVELOPMENT_FOLDS if args.fold is None or fold.name in args.fold]
+    selected_folds = [
+        fold
+        for fold in DEVELOPMENT_FOLDS
+        if (args.include_legacy or fold.name != "legacy_evaluation")
+        and (args.fold is None or fold.name in args.fold)
+    ]
     selected_horizons = tuple(args.horizon_seconds or HORIZON_SECONDS)
     selected_thresholds = tuple(args.threshold or ANALYTIC_THRESHOLDS)
     design = {
