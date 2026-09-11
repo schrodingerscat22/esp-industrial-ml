@@ -83,9 +83,11 @@ def main() -> None:
     parser.add_argument("--horizon-seconds", choices=HORIZON_SECONDS, type=int, action="append")
     parser.add_argument("--threshold", choices=ANALYTIC_THRESHOLDS, type=float, action="append")
     parser.add_argument("--measurement-delay-seconds", type=int, default=0)
+    parser.add_argument("--process-availability-delay-seconds", type=int, default=0)
     parser.add_argument("--output-dir", type=Path)
     args = parser.parse_args()
     delay_to_samples(args.measurement_delay_seconds)
+    delay_to_samples(args.process_availability_delay_seconds)
     if args.output_dir is not None:
         OUT = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
     OUT.mkdir(exist_ok=True)
@@ -108,6 +110,7 @@ def main() -> None:
         "contract": "F2 event=max(y(t+10s),...,y(t+h))>threshold; incomplete future window=unknown",
         "availability_unverified": True,
         "measurement_delay_seconds": args.measurement_delay_seconds,
+        "process_availability_delay_seconds": args.process_availability_delay_seconds,
         "horizons_seconds": selected_horizons,
         "analytic_thresholds": selected_thresholds,
         "operational_alarm_threshold": None,
@@ -130,7 +133,9 @@ def main() -> None:
         started = time.monotonic()
         fold_source = source if fold.evaluation_end is None else source.loc[source.index < fold.evaluation_end]
         schema = fit_forecast_schema(fold_source.loc[fold_source.index < fold.evaluation_start], classification)
-        process = process_features(fold_source, schema)
+        process = process_features(
+            fold_source, schema, availability_delay_seconds=args.process_availability_delay_seconds
+        )
         process_valid = process[schema["inputs"]].notna().all(axis=1)
         valid = (history_valid & process_valid).reindex(fold_source.index)
         fold_summary: dict[str, object] = {

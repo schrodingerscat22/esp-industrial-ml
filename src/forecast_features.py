@@ -80,12 +80,22 @@ def _minutes_since_start(starts: pd.Series, available: pd.Series, segment: pd.Se
     return elapsed.where(available.notna()).astype("float32")
 
 
+def _available_after_delay(values: pd.Series, delay: int, segment: pd.Series) -> pd.Series:
+    """Return values available at an origin, without bridging a telemetry gap."""
+    available = time_shift(values, delay)
+    if delay:
+        origin_segment = segment.astype("float32")
+        source_segment = time_shift(origin_segment, delay)
+        available = available.where(source_segment.eq(origin_segment))
+    return available
+
+
 def history_features(df: pd.DataFrame, measurement_delay_seconds: int = 0) -> pd.DataFrame:
     """Features that use only the latest dust measurement available at an origin."""
     validate_time(df)
     delay = delay_to_samples(measurement_delay_seconds)
     segment = segments(df)
-    available = time_shift(df[TARGET].astype("float32"), delay)
+    available = _available_after_delay(df[TARGET].astype("float32"), delay, segment)
     parts: dict[str, pd.Series] = {"dust_available": available}
 
     for lag in LAG_SAMPLES:
@@ -105,9 +115,12 @@ def history_features(df: pd.DataFrame, measurement_delay_seconds: int = 0) -> pd
     return pd.DataFrame(parts, index=df.index).astype("float32")
 
 
-def process_features(df: pd.DataFrame, schema: dict[str, list[str]]) -> pd.DataFrame:
-    """Current and historical process features, never crossing timestamp gaps."""
+def process_features(
+    df: pd.DataFrame, schema: dict[str, list[str]], availability_delay_seconds: int = 0
+) -> pd.DataFrame:
+    """Process features available at an origin, never crossing timestamp gaps."""
     validate_time(df)
+    delay = delay_to_samples(availability_delay_seconds)
     inputs = schema["inputs"]
     continuous = schema["continuous"]
     rapping = schema["rapping"]
@@ -137,7 +150,14 @@ def process_features(df: pd.DataFrame, schema: dict[str, list[str]]) -> pd.DataF
         values[:, position:position + width] = array
         position += width
 
-    base = df[inputs].astype("float32")
+    raw_base = df[inputs].astype("float32")
+    base = pd.DataFrame(
+        {
+            tag: _available_after_delay(raw_base[tag], delay, segment)
+            for tag in inputs
+        },
+        index=df.index,
+    ).astype("float32")
     add(base)
     for lag in PROCESS_LAG_SAMPLES:
         add(base.groupby(segment).shift(lag))
@@ -149,9 +169,9 @@ def process_features(df: pd.DataFrame, schema: dict[str, list[str]]) -> pd.DataF
     for period in PROCESS_DIFF_SAMPLES:
         add(analog.groupby(segment).diff(period))
     for tag in rapping:
-        starts = rapping_starts(df[tag])
+        starts = rapping_starts(base[tag])
         add(starts.astype("float32"))
-        add(_minutes_since_start(starts, df[tag], segment))
+        add(_minutes_since_start(starts, base[tag], segment))
     if position != len(names):
         raise RuntimeError("Process feature matrix was not filled completely")
     return pd.DataFrame(values, index=df.index, columns=names)

@@ -27,6 +27,13 @@ konkretnego alarmu, ponieważ nie uzgodniono progu operacyjnego, dopuszczalnej
 częstości fałszywych alarmów ani kosztu przeoczenia. Progi 20/40 pozostają
 analityczne i nie są limitami prawnymi.
 
+Parametry `--measurement-delay-seconds` i
+`--process-availability-delay-seconds` rozdzielają dostępność pyłomierza od
+dostępności tagów procesu. Oba odrzucają wartość, która wymagałaby przejścia
+przez lukę telemetryczną. Krótki test integracyjny D1 (1 min, 20 mg/Nm³,
+opóźnienie procesu 30 s) zakończył się poprawnie; nie jest on pełną analizą
+wrażliwości ani wynikiem głównym.
+
 ## Lokalne przeliczenie kontrolne: D1--D3
 
 Wykonano 11 września 2026 na `dataset_clean.parquet`, tym samym zamrożonym

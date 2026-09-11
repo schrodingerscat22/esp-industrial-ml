@@ -56,6 +56,16 @@ class ForecastFeatureTests(unittest.TestCase):
         self.assertTrue(pd.isna(history.loc[first_after_gap, "dust_lag_1"]))
         self.assertTrue(pd.isna(process.loc[first_after_gap, "process_lag_6"]))
 
+    def test_availability_delays_do_not_cross_a_gap(self):
+        frame = source_frame()
+        missing = frame.index[100]
+        gapped = frame.drop(missing)
+        first_after_gap = frame.index[101]
+        history = history_features(gapped, measurement_delay_seconds=60)
+        process = process_features(gapped, SCHEMA, availability_delay_seconds=60)
+        self.assertTrue(pd.isna(history.loc[first_after_gap, "dust_available"]))
+        self.assertTrue(pd.isna(process.loc[first_after_gap, "process"]))
+
     def test_complete_case_cleaning_does_not_fill_missing_values(self):
         frame = source_frame()
         frame.loc[frame.index[10], "process"] = np.nan
