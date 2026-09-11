@@ -26,3 +26,53 @@ Nie raportujemy jeszcze precision, recall, false alarms/hour ani lead time dla
 konkretnego alarmu, ponieważ nie uzgodniono progu operacyjnego, dopuszczalnej
 częstości fałszywych alarmów ani kosztu przeoczenia. Progi 20/40 pozostają
 analityczne i nie są limitami prawnymi.
+
+## Lokalne przeliczenie kontrolne: D1--D3
+
+Wykonano 11 września 2026 na `dataset_clean.parquet`, tym samym zamrożonym
+kodzie i trzech kalendarzowych foldach D1--D3 zdefiniowanych dla F1. Wyniki
+poniżej są **developerską replikacją**, a nie niezależnym holdoutem ani
+zatwierdzonym alarmem operacyjnym. Dane, predykcje, modele i tabele kalibracji
+pozostają lokalne w ignorowanych katalogach `data/processed/forecast_f2_*`.
+
+### Próg analityczny 20 mg/Nm³
+
+Średnie, minimum i maksimum PR-AUC między foldami oraz średni Brier score:
+
+| Horyzont | Model | PR-AUC: średnia (min--max) | Brier: średnia |
+| --- | --- | ---: | ---: |
+| 1 min | persistence | 0,460 (0,441--0,491) | 0,034 |
+| 1 min | XGBoost-PH | 0,940 (0,925--0,952) | 0,012 |
+| 3 min | persistence | 0,309 (0,278--0,337) | 0,089 |
+| 3 min | XGBoost-PH | 0,927 (0,907--0,949) | 0,026 |
+| 5 min | persistence | 0,293 (0,255--0,319) | 0,143 |
+| 5 min | XGBoost-PH | 0,921 (0,910--0,942) | 0,041 |
+
+Potwierdzone w tej replikacji: XGBoost-PH ma wyższy PR-AUC i niższy Brier
+score od persistence w każdym z 3 foldów oraz we wszystkich 3 horyzontach.
+To jest silny sygnał predykcyjny w aktualnym zbiorze, ale foldy pochodzą z
+tego samego okresu danych, więc nie stanowi jeszcze potwierdzenia na nowym
+okresie eksploatacji.
+
+### Próg analityczny 40 mg/Nm³
+
+PR-AUC XGBoost-PH w D1/D2/D3 wyniósł odpowiednio:
+
+| Horyzont | D1 | D2 | D3 | Średnia |
+| --- | ---: | ---: | ---: | ---: |
+| 1 min | 0,844 | 0,923 | 0,855 | 0,874 |
+| 3 min | 0,801 | 0,830 | 0,854 | 0,829 |
+| 5 min | 0,805 | 0,787 | 0,855 | 0,815 |
+
+### Co pozostaje nieustalone
+
+- 20 i 40 mg/Nm³ są wyłącznie progami analitycznymi; nie wolno ich traktować
+  jako nastaw alarmowych ani granic prawnych.
+- Nie wybrano progu prawdopodobieństwa alarmu. Dlatego nie ma jeszcze
+  uczciwej wartości precision, recall, false alarms/hour ani lead time.
+- Semantyka i dostępność online tagów oraz rzeczywiste opóźnienie pyłomierza
+  nadal wymagają potwierdzenia przez instalację. Wyniki F2 zakładają dostępność
+  cech zgodną z aktualnym kontraktem opóźnień, a nie zweryfikowaną architekturą
+  sterowania.
+- Następny krok metodologiczny to zamrożenie konfiguracji, uzgodnienie kosztu
+  alarmów i test na nowym, odseparowanym czasowo holdoucie.
