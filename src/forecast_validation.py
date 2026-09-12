@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import average_precision_score, brier_score_loss
 
-from src.time_analysis import STEP, coverage, segments, time_shift, validate_time
+from src.time_analysis import STEP, coverage, rapping_starts, segments, time_shift, validate_time
 
 
 @dataclass(frozen=True)
@@ -136,6 +136,33 @@ def rapping_window(df: pd.DataFrame, tag: str = "008B05154") -> pd.Series:
     since_segment = (times - times.groupby(segment).transform("first")).dt.total_seconds() / 60
     known = elapsed.notna() | since_segment.gt(5)
     return elapsed.between(0, 5).astype("float32").where(known)
+
+
+def critical_rapping_relation(
+    df: pd.DataFrame, horizon_seconds: int, post_window_seconds: int = 180,
+    tag: str = "008B05154",
+) -> pd.Series:
+    """Whether an origin or its future horizon touches the critical rapping window.
+
+    This is an *ex-post* evaluation stratum. It must never be supplied as an
+    online feature because the part after the origin uses future observed starts.
+    """
+    validate_time(df)
+    if horizon_seconds <= 0 or horizon_seconds % int(STEP.total_seconds()):
+        raise ValueError("horizon_seconds must be a positive multiple of STEP")
+    if post_window_seconds <= 0 or post_window_seconds % int(STEP.total_seconds()):
+        raise ValueError("post_window_seconds must be a positive multiple of STEP")
+    starts = rapping_starts(df[tag])
+    segment = segments(df)
+    times = df.index.to_series()
+    last = times.where(starts).groupby(segment).ffill()
+    elapsed = (times - last).dt.total_seconds()
+    current = elapsed.between(0, post_window_seconds)
+    future_starts = pd.concat(
+        [time_shift(starts.astype("float32"), -step).eq(1) for step in range(1, horizon_seconds // int(STEP.total_seconds()) + 1)],
+        axis=1,
+    ).any(axis=1)
+    return (current | future_starts).rename("critical_rapping_related")
 
 
 def strata(

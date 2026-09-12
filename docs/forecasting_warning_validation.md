@@ -127,3 +127,41 @@ Zamknięto developerską analizę wrażliwości wymaganą przez metodologię dla
 osobnych źródeł dostępności. Następny krok nie wymaga kolejnego strojenia:
 zamrozić kod i konfigurację, a wyniki opisać jako retrospektywne do czasu
 uzyskania potwierdzonych opóźnień lub nowego, odseparowanego holdoutu.
+
+## Audyt F3: rola krytycznego strzepywania strefy 3
+
+Audyt rozdziela istniejące predykcje F2 według tagu `008B05154` (strzepywanie
+elektrod zbiorczych strefy 3). Wiersz jest oznaczony jako związany z rappingiem,
+gdy origin przypada do 3 min po obserwowanym starcie albo gdy start wystąpi w
+przyszłym horyzoncie. Jest to stratyfikacja **po fakcie**: przyszły start służy
+wyłącznie do interpretacji wyniku i nie jest cechą modelu.
+
+W 423 kompletnych profilach krytycznego rappingu mediana odstępu między startami
+wynosi 82,83 min (10--90 percentyl: 82,67--84,50 min). W ciągu 3 min po starcie
+93,6% profili przekracza 20 mg/Nm³, a 57,4% przekracza 40 mg/Nm³. To silnie
+regularny mechanizm, który może być predykcyjnym skrótem, a nie dowodem ogólnej
+zdolności do wykrywania niestabilności ESP.
+
+### Wynik poza krytycznym rappingiem
+
+Agregat D1--D3 XGBoost-PH:
+
+| Próg | Horyzont | PR-AUC: całość | PR-AUC: po/z przyszłym rappingiem | PR-AUC: poza rappingiem | Dodatnie poza rappingiem |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 20 mg/Nm³ | 1 min | 0,940 | 0,977 | 0,887 | 3 042 |
+| 20 mg/Nm³ | 3 min | 0,927 | 0,992 | 0,843 | 5 957 |
+| 20 mg/Nm³ | 5 min | 0,921 | 0,990 | 0,819 | 8 569 |
+| 40 mg/Nm³ | 1 min | 0,874 | 0,884 | 0,187 | 37 |
+| 40 mg/Nm³ | 3 min | 0,829 | 0,844 | 0,075 | 64 |
+| 40 mg/Nm³ | 5 min | 0,815 | 0,843 | 0,024 | 78 |
+
+Wniosek potwierdzony: dla 20 mg/Nm³ model zachowuje istotny sygnał poza
+krytycznym rappingiem, ale wynik ogólny jest częściowo wzmacniany przez ten
+cykl. Dla 40 mg/Nm³ niemal wszystkie dodatnie przypadki są związane z tym
+mechanizmem; liczba przypadków poza nim jest za mała do twierdzenia o ogólnym
+ostrzeganiu przed wysokim pyłem.
+
+Następny eksperyment F3 musi porównać pełny PH z PH bez wszystkich tagów
+`esp_rapping` oraz z baseline'em wykorzystującym wyłącznie fazę cyklu strefy 3.
+Osobno raportujemy prognozy przed obserwowanym startem rappingu. Dopiero to
+rozstrzygnie, ile jakości wynika z harmonogramu, a ile z innych sygnałów procesu.

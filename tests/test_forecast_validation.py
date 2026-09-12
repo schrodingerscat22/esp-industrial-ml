@@ -14,6 +14,7 @@ from src.forecast_validation import (
     threshold_episode_starts,
     warning_metrics,
     calibration_table,
+    critical_rapping_relation,
 )
 
 
@@ -50,6 +51,14 @@ class ForecastValidationTests(unittest.TestCase):
         window = rapping_window(data)
         self.assertTrue(pd.isna(window.loc[pd.Timestamp("2025-07-01 00:08:30")]))
         self.assertEqual(window.loc[pd.Timestamp("2025-07-01 00:14:30")], 0.0)
+
+    def test_critical_rapping_relation_marks_current_and_future_start(self):
+        data = frame(rows=100)
+        related = critical_rapping_relation(data, 60, post_window_seconds=180)
+        self.assertTrue(related.loc[data.index[39]])
+        self.assertTrue(related.loc[data.index[40]])
+        self.assertTrue(related.loc[data.index[58]])
+        self.assertFalse(related.loc[data.index[59]])
 
     def test_strata_and_metrics_are_defined_for_regular_data(self):
         data = frame()
