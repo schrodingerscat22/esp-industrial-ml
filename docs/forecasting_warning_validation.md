@@ -165,3 +165,25 @@ Następny eksperyment F3 musi porównać pełny PH z PH bez wszystkich tagów
 `esp_rapping` oraz z baseline'em wykorzystującym wyłącznie fazę cyklu strefy 3.
 Osobno raportujemy prognozy przed obserwowanym startem rappingu. Dopiero to
 rozstrzygnie, ile jakości wynika z harmonogramu, a ile z innych sygnałów procesu.
+
+### Ablation F3 dla progu 20 mg/Nm³
+
+Przeliczenie D1--D3 porównuje zamrożone modele: H (wyłącznie historia pyłu),
+PH bez wszystkich tagów `esp_rapping`, model wyłącznie z krytycznym tagiem
+strefy 3 i jego fazą oraz pełny PH. Średni PR-AUC:
+
+| Horyzont | Stratum | H | PH bez rappingu | Tylko cykl strefy 3 | Pełny PH |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1 min | całość | 0,856 | 0,880 | 0,502 | 0,940 |
+| 1 min | poza rappingiem | 0,757 | 0,828 | 0,059 | 0,887 |
+| 3 min | całość | 0,832 | 0,850 | 0,529 | 0,927 |
+| 3 min | poza rappingiem | 0,687 | 0,770 | 0,094 | 0,843 |
+| 5 min | całość | 0,842 | 0,857 | 0,580 | 0,921 |
+| 5 min | poza rappingiem | 0,689 | 0,772 | 0,121 | 0,819 |
+
+Potwierdzone: krytyczny cykl sam nie wyjaśnia wyniku PH i nie umie przewidywać
+alarmów poza własnym oknem. Rapping wnosi dodatkową informację do pełnego PH,
+jednak PH bez rappingu zachowuje większość jakości, a historia pyłu jest silnym
+baseline'em. Wynik pełnego PH należy więc opisywać jako połączenie dynamiki
+pyłu, stanu procesu i przewidywalnych zaburzeń po rappingu — nie jako czyste
+wykrywanie niezależnych awarii procesu.
