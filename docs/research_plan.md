@@ -19,11 +19,12 @@ wszystkich strzepywaczy. U/I jest pozorną rezystancją, nie pomiarem rezystywno
 pyłu. Prawie algebraiczna zależność P od U*I i zamknięta pętla regulatora
 uniemożliwiają uznanie prostego modelu predykcyjnego za optymalizator energii.
 
-**Następne zadanie: tylko E1 — audyt sygnałów, cykli i porównywalności energetycznej,
-bez treningów.** Instrukcja dla Terra medium:
-[electrical_energy_handoff.md](electrical_energy_handoff.md).
-Wykonano rozpoznanie i zapisano metodologię; E1 nie został jeszcze wdrożony.
-Lokalny wynik rozpoznania: `data/processed/energy_idea_review_20260912/preflight.json`.
+**E1 zakończono decyzją B:** sygnały U–I i cykle są poprawne do opisu stanu,
+ale nie ma wystarczająco porównywalnych bloków do benchmarku energetycznego.
+Wynik: [electrical_energy_validation.md](electrical_energy_validation.md).
+E2 może być wyłącznie małym testem diagnostycznego przyrostu informacji, bez
+optymalizacji nastaw. Lokalny wynik rozpoznania:
+`data/processed/energy_idea_review_20260912/preflight.json`.
 
 E1 kończy się decyzją: A — sygnał procesu i pokrycie energetyczne, B — sam
 potencjał monitorowania stanu, C — brak uzasadnienia dalszych modeli na tym
@@ -40,7 +41,7 @@ Brak dodatkowych informacji z instalacji nie blokuje opisowego E1.
 | F1, horyzonty 1/3/5 min | Wdrożone, D1–D3 i analiza opóźnień; [forecasting_validation.md](forecasting_validation.md), [forecasting_delay_sensitivity.md](forecasting_delay_sensitivity.md) |
 | F2 i wrażliwość dostępności | Wdrożone i przeliczone; [forecasting_warning_validation.md](forecasting_warning_validation.md) |
 | F3: wpływ cyklu i ablation | Przeliczone D1–D3; końcowe sekcje raportu F2 |
-| Kierunek E | Przegląd idei i handoff gotowe; implementacja E1 do wykonania |
+| Kierunek E | E1 wdrożony; decyzja B i raport w [electrical_energy_validation.md](electrical_energy_validation.md) |
 
 Cały dotychczas oglądany miesiąc pozostaje okresem rozwojowym; nie odzyskujemy
 niezależnego holdoutu przez ponowny podział tych samych danych. Nowe obliczenia

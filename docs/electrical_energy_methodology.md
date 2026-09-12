@@ -1,8 +1,9 @@
 # E: ocena energetyczna ESP z charakterystyk elektrycznych i danych procesu
 
-Stan: 2026-09-12. **Projekt metodologii po przeglądzie pomysłu; E1 i E2 nie są
-jeszcze wdrożone.** Wykonano tylko małe obliczenia rozpoznawcze opisane poniżej.
-Instrukcja następnego zadania: [electrical_energy_handoff.md](electrical_energy_handoff.md).
+Stan: 2026-09-12. **E1 wdrożono i przeliczono; decyzja: B.** Wyniki i ograniczenia
+są w [electrical_energy_validation.md](electrical_energy_validation.md). E2 nie
+jest jeszcze wdrożone. Instrukcja implementacyjna E1 pozostaje w
+[electrical_energy_handoff.md](electrical_energy_handoff.md).
 Dokument jest odrębnym kierunkiem energetycznym. Nie zmienia definicji ani
 wyników F1–F3 z [forecasting_methodology.md](forecasting_methodology.md).
 
