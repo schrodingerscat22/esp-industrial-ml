@@ -76,9 +76,12 @@ dla żadnego progu. Pełna tabela pozostaje lokalnie w `support_summary.csv`.
 
 ## Następny krok
 
-Nie przechodzimy do optymalizacji nastaw. Jeżeli temat ma być kontynuowany bez
-danych z instalacji, można wykonać mały E2: sprawdzić na osobnym czasie, czy
-proces i cykl rappingu wyjaśniają U/I lepiej niż sama historia U/I, oraz czy
-reszty są stabilne między dniami. Wynik E2 byłby monitorem diagnostycznym, nie
-sterownikiem energetycznym. Badanie oszczędności wymaga później archiwum nastaw
-lub bezpiecznego, zatwierdzonego eksperymentu zmiany sterowania.
+Nie przechodzimy do optymalizacji nastaw. Następny audyt E1.5 potwierdził brak
+zarejestrowanych nastaw i trybów regulatora; szczegóły w
+[control_signal_audit.md](control_signal_audit.md). Jeżeli temat ma być
+kontynuowany bez danych z instalacji, można wykonać mały E2: sprawdzić na
+osobnym czasie, czy proces i cykl rappingu wyjaśniają U/I lepiej niż sama
+historia U/I, oraz czy reszty są stabilne między dniami. Wynik E2 byłby monitorem
+diagnostycznym, nie sterownikiem energetycznym. Badanie oszczędności wymaga
+później archiwum nastaw lub bezpiecznego, zatwierdzonego eksperymentu zmiany
+sterowania.
