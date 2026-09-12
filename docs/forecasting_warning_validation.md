@@ -1,5 +1,11 @@
 # Walidacja implementacji F2
 
+Status kierunku 2026-09-12: poniższe wyniki i ablation F3 pozostają zachowane.
+Nie wykazano działania operacyjnego, które uzasadniałoby dalsze rozwijanie
+alarmów cyklicznego rappingu. Aktualnym następnym krokiem jest
+[audyt energetyczny E1](electrical_energy_methodology.md). Wskazania „następnego
+kroku” w starszych sekcjach dokumentu opisują ówczesny plan.
+
 F2 przewiduje, czy w kompletnym przyszłym oknie `(t, t+h]` pył przekroczy
 analityczny próg 20 lub 40 mg/Nm³. Implementacja znajduje się w
 `scripts/run_forecasting_warning_experiment.py`.

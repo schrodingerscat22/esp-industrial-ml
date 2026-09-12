@@ -1,5 +1,10 @@
 # Metodologia prognozowania pyłu 1/3/5 min — projekt do wdrożenia
 
+Aktualizacja kierunku 2026-09-12: F1–F3 są przeliczone w zakresie opisanym
+w raportach walidacji. Priorytetem jest teraz osobny audyt energetyczny
+[E1](electrical_energy_methodology.md); nie zmienia on poniższego kontraktu
+prognozowania i nie jest kolejnym automatycznym treningiem F2.
+
 Wersja: 0.3, 2026-09-11. Status: F1 i implementacja F2 wdrożone; lokalne
 przeliczenia są zapisywane poza Git. F2 nie ma jeszcze progu operacyjnego.
 Kontynuacja audytów `methodology_audit.md`, `model_audit.md` i

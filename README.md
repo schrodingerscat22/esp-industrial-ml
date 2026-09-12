@@ -2,6 +2,10 @@
 
 Machine learning based prediction and optimization of electrostatic precipitator operation.
 
+Current research status and next task: [research plan](docs/research_plan.md).
+The energy direction has a [methodology](docs/electrical_energy_methodology.md)
+and an [implementation handoff](docs/electrical_energy_handoff.md).
+
 ## Goals
 - Dust concentration prediction
 - Feature engineering for ESP process
