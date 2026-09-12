@@ -87,3 +87,43 @@ PR-AUC XGBoost-PH w D1/D2/D3 wyniósł odpowiednio:
   sterowania.
 - Następny krok metodologiczny to zamrożenie konfiguracji, uzgodnienie kosztu
   alarmów i test na nowym, odseparowanym czasowo holdoucie.
+
+## Analiza wrażliwości dostępności danych F2
+
+Wykonano 12 września 2026 pełną analizę na foldach D1--D3 dla opóźnień
+0/30/60/120 s, zawsze bez strojenia hiperparametrów. W każdym scenariuszu
+opóźniano tylko jedno źródło: albo pyłomierz, albo tagi procesu; drugie
+pozostawało przy 0 s. Wyniki są więc analizą jednoczynnikową, a nie symulacją
+ich łącznego opóźnienia. Wszystkie artefakty pozostają lokalne i ignorowane
+przez Git.
+
+### XGBoost-PH, próg analityczny 20 mg/Nm³
+
+Średni PR-AUC między D1--D3:
+
+| Opóźnione źródło | Opóźnienie | 1 min | 3 min | 5 min |
+| --- | ---: | ---: | ---: | ---: |
+| brak | 0 s | 0,940 | 0,927 | 0,921 |
+| tagi procesu | 30 s | 0,937 | 0,924 | 0,925 |
+| tagi procesu | 60 s | 0,936 | 0,927 | 0,926 |
+| tagi procesu | 120 s | 0,933 | 0,915 | 0,914 |
+| pyłomierz | 30 s | 0,901 | 0,900 | 0,908 |
+| pyłomierz | 60 s | 0,886 | 0,896 | 0,901 |
+| pyłomierz | 120 s | 0,879 | 0,892 | 0,901 |
+
+### Interpretacja potwierdzona w tej replikacji
+
+- Wynik PH jest stosunkowo odporny na osobne opóźnienie tagów procesu do 120 s:
+  największa zmiana średniego PR-AUC względem 0 s wynosi 0,012.
+- Jest bardziej wrażliwy na opóźnienie pyłomierza, zwłaszcza przy horyzoncie
+  1 min (spadek z 0,940 do 0,879 przy 120 s). Mimo tego PH nadal wyraźnie
+  przewyższa persistence w każdym przeliczonym scenariuszu.
+- Nie można z tego wyprowadzić rzeczywistego opóźnienia żadnego instrumentu ani
+  jakości wariantu, w którym oba źródła są opóźnione równocześnie.
+
+### Status po analizie
+
+Zamknięto developerską analizę wrażliwości wymaganą przez metodologię dla
+osobnych źródeł dostępności. Następny krok nie wymaga kolejnego strojenia:
+zamrozić kod i konfigurację, a wyniki opisać jako retrospektywne do czasu
+uzyskania potwierdzonych opóźnień lub nowego, odseparowanego holdoutu.
