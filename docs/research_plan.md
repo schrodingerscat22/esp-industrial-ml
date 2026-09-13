@@ -44,6 +44,7 @@ Brak dodatkowych informacji z instalacji nie blokuje opisowego E1.
 | F2 i wrażliwość dostępności | Wdrożone i przeliczone; [forecasting_warning_validation.md](forecasting_warning_validation.md) |
 | F3: wpływ cyklu i ablation | Przeliczone D1–D3; końcowe sekcje raportu F2 |
 | Kierunek E | E1: decyzja B; E1.5: brak zmiennej sterowania, [raport](control_signal_audit.md) |
+| Audyt odpowiedzi pyłu → U/P | Wdrożony; krótka zależność predykcyjna, lecz bez izolacji od wszystkich rappingów: [controller_response_validation.md](controller_response_validation.md) |
 
 Cały dotychczas oglądany miesiąc pozostaje okresem rozwojowym; nie odzyskujemy
 niezależnego holdoutu przez ponowny podział tych samych danych. Nowe obliczenia
