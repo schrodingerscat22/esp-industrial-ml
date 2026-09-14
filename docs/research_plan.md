@@ -1,11 +1,33 @@
 # Aktualny plan doktoratu ESP
 
-Stan: 2026-09-12. Kontynuować z gałęzi `codex/methodology-audit`.
+Stan: 2026-09-14. Kontynuować z gałęzi `codex/methodology-audit`.
 Użytkownik zezwolił na commit i push kodu, testów i dokumentacji na tę gałąź.
 Zachować niezacommitowane zmiany. Dane źródłowe są tylko do odczytu; dane
 przemysłowe, modele, predykcje i szczegółowe outputy pozostają poza Git.
 
-## Bieżąca decyzja: wracamy do pytania energetycznego
+## Bieżąca decyzja: H — fizyka, historia i granice uogólniania
+
+Użytkownik zaproponował połączenie fizyki ESP z historią w celu poszerzenia
+zakresu modelowania. [Studium wykonalności](hybrid_esp_feasibility.md) daje
+warunkowe GO dla małego modelu z ograniczeniami fizycznymi i testów pominiętych
+reżimów pracy. Nie ma podstaw do uznania syntetycznych stanów za nowe
+obserwacje ani do kalibracji pełnego modelu fizycznego przy nieznanej geometrii,
+wlocie pyłu i bazach przepływu. Cel badawczy wykracza poza diagnostykę,
+ale nie stanowi jeszcze potwierdzonej optymalizacji energetycznej.
+
+Aktualny protokół: [hybrid_esp_methodology.md](hybrid_esp_methodology.md).
+Następne zlecenie: **H0 + H1 + H2 tylko D1**, według
+[hybrid_esp_handoff.md](hybrid_esp_handoff.md). Wykonano rozpoznanie danych,
+przegląd źródeł, syntetyczny przykład niejednoznaczności i przygotowanie planu.
+**Nie trenowano modeli H.** H3 (D2/D3, wyłączone reżimy, ablacje) i H4
+(warunkowe scenariusze) pozostają kolejnymi, oddzielnymi etapami.
+
+Brak danych sterowania potwierdzony przez użytkownika nie blokuje pilotażu
+modelu warunkowego. Estymowany parametr efektywny nie jest pomiarem rho;
+brak walidacji interwencji ogranicza interpretację scenariuszy nastaw.
+Nie uruchamiać równolegle wcześniejszego E2 ani kolejnych F1–F3.
+
+## Motywacja energetyczna i wcześniejsze decyzje E
 
 Głównym zamiarem doktoratu jest poprawa energetyczna; temat pozostaje otwarty,
 a promotor dopuszcza zmianę kierunku. Użytkownik wskazał brak praktycznego
@@ -45,6 +67,7 @@ Brak dodatkowych informacji z instalacji nie blokuje opisowego E1.
 | F3: wpływ cyklu i ablation | Przeliczone D1–D3; końcowe sekcje raportu F2 |
 | Kierunek E | E1: decyzja B; E1.5: brak zmiennej sterowania, [raport](control_signal_audit.md) |
 | Audyt odpowiedzi pyłu → U/P | Wdrożony; krótka zależność predykcyjna, lecz bez izolacji od wszystkich rappingów: [controller_response_validation.md](controller_response_validation.md) |
+| H: fizyka + historia | Feasibility i protokół gotowe, modele jeszcze niewdrożone: [studium](hybrid_esp_feasibility.md), [handoff](hybrid_esp_handoff.md) |
 
 Cały dotychczas oglądany miesiąc pozostaje okresem rozwojowym; nie odzyskujemy
 niezależnego holdoutu przez ponowny podział tych samych danych. Nowe obliczenia
