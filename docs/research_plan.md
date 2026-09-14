@@ -16,11 +16,10 @@ wlocie pyłu i bazach przepływu. Cel badawczy wykracza poza diagnostykę,
 ale nie stanowi jeszcze potwierdzonej optymalizacji energetycznej.
 
 Aktualny protokół: [hybrid_esp_methodology.md](hybrid_esp_methodology.md).
-Następne zlecenie: **H0 + H1 + H2 tylko D1**, według
-[hybrid_esp_handoff.md](hybrid_esp_handoff.md). Wykonano rozpoznanie danych,
-przegląd źródeł, syntetyczny przykład niejednoznaczności i przygotowanie planu.
-**Nie trenowano modeli H.** H3 (D2/D3, wyłączone reżimy, ablacje) i H4
-(warunkowe scenariusze) pozostają kolejnymi, oddzielnymi etapami.
+H0, H1 i H2 na D1 są wdrożone: [wynik pilotażu](hybrid_esp_validation.md).
+Hybryda nie poprawiła MAE względem modelu danych, a parametry rdzenia są
+słabo określone. H3 (D2/D3, wyłączone reżimy, ablacje) może ten wynik
+potwierdzić albo sfalsyfikować; H4 pozostaje zamknięte do czasu decyzji po H3.
 
 Brak danych sterowania potwierdzony przez użytkownika nie blokuje pilotażu
 modelu warunkowego. Estymowany parametr efektywny nie jest pomiarem rho;
@@ -67,7 +66,7 @@ Brak dodatkowych informacji z instalacji nie blokuje opisowego E1.
 | F3: wpływ cyklu i ablation | Przeliczone D1–D3; końcowe sekcje raportu F2 |
 | Kierunek E | E1: decyzja B; E1.5: brak zmiennej sterowania, [raport](control_signal_audit.md) |
 | Audyt odpowiedzi pyłu → U/P | Wdrożony; krótka zależność predykcyjna, lecz bez izolacji od wszystkich rappingów: [controller_response_validation.md](controller_response_validation.md) |
-| H: fizyka + historia | Feasibility i protokół gotowe, modele jeszcze niewdrożone: [studium](hybrid_esp_feasibility.md), [handoff](hybrid_esp_handoff.md) |
+| H: fizyka + historia | H0–H2/D1 wdrożone; brak przewagi hybrydy, H3 dopiero do oceny: [wynik](hybrid_esp_validation.md) |
 
 Cały dotychczas oglądany miesiąc pozostaje okresem rozwojowym; nie odzyskujemy
 niezależnego holdoutu przez ponowny podział tych samych danych. Nowe obliczenia
