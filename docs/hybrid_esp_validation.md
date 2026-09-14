@@ -1,8 +1,9 @@
 # H2: wynik pilotażu hybrydowego ESP na D1
 
-Stan: 2026-09-14. Wdrożono H0, H1 i H2 wyłącznie na D1 według
+Stan: 2026-09-14. Ten dokument opisuje wyłącznie H0, H1 i H2 na D1 według
 [hybrid_esp_methodology.md](hybrid_esp_methodology.md) i
-[hybrid_esp_handoff.md](hybrid_esp_handoff.md). Nie wykonano H3 ani H4.
+[hybrid_esp_handoff.md](hybrid_esp_handoff.md). Wynik H3 jest w
+[hybrid_esp_h3_validation.md](hybrid_esp_h3_validation.md); H4 nie wykonano.
 Nie zapisano modeli, predykcji jednostkowych ani szczegółowych szeregów.
 Wyniki lokalne pozostają w ignorowanym `data/processed/hybrid_esp_h2_d1_v3/`.
 

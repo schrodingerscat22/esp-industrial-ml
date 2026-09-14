@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from src.hybrid_esp_validation import Support, d1_split
+from src.hybrid_esp_validation import Support, buffered_mask, d1_split
 
 
 class HybridEspValidationTests(unittest.TestCase):
@@ -20,6 +20,14 @@ class HybridEspValidationTests(unittest.TestCase):
         support = Support(["x", "y"]).fit(train).classify(check)
         self.assertEqual(support.iloc[0], "supported")
         self.assertEqual(support.iloc[1], "outside")
+
+    def test_buffer_does_not_cross_timestamp_gap(self):
+        index = pd.date_range("2025-01-01", periods=10, freq="10s").append(
+            pd.date_range("2025-01-01 00:10:00", periods=10, freq="10s"))
+        event = pd.Series(False, index=index); event.iloc[9] = True
+        buffered = buffered_mask(event, 20)
+        self.assertTrue(buffered.iloc[8])
+        self.assertFalse(buffered.iloc[10])
 
 
 if __name__ == "__main__":

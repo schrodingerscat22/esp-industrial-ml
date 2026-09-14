@@ -16,10 +16,11 @@ wlocie pyłu i bazach przepływu. Cel badawczy wykracza poza diagnostykę,
 ale nie stanowi jeszcze potwierdzonej optymalizacji energetycznej.
 
 Aktualny protokół: [hybrid_esp_methodology.md](hybrid_esp_methodology.md).
-H0, H1 i H2 na D1 są wdrożone: [wynik pilotażu](hybrid_esp_validation.md).
-Hybryda nie poprawiła MAE względem modelu danych, a parametry rdzenia są
-słabo określone. H3 (D2/D3, wyłączone reżimy, ablacje) może ten wynik
-potwierdzić albo sfalsyfikować; H4 pozostaje zamknięte do czasu decyzji po H3.
+H0--H2/D1 są opisane w [wyniku pilotażu](hybrid_esp_validation.md), a główny
+test H3 w [raporcie H3](hybrid_esp_h3_validation.md). W ośmiu kwalifikujących
+się wyłączeniach reżimów M3 pogorszył MAE względem M1 o 8,9--50,2%; jeden test
+D3/przepływ nie miał dostatecznego pokrycia kalibracji. H-G nie potwierdzono,
+H4 pozostaje zamknięte, a dalsze strojenie hybrydy nie jest uzasadnione.
 
 Brak danych sterowania potwierdzony przez użytkownika nie blokuje pilotażu
 modelu warunkowego. Estymowany parametr efektywny nie jest pomiarem rho;
@@ -66,7 +67,7 @@ Brak dodatkowych informacji z instalacji nie blokuje opisowego E1.
 | F3: wpływ cyklu i ablation | Przeliczone D1–D3; końcowe sekcje raportu F2 |
 | Kierunek E | E1: decyzja B; E1.5: brak zmiennej sterowania, [raport](control_signal_audit.md) |
 | Audyt odpowiedzi pyłu → U/P | Wdrożony; krótka zależność predykcyjna, lecz bez izolacji od wszystkich rappingów: [controller_response_validation.md](controller_response_validation.md) |
-| H: fizyka + historia | H0–H2/D1 wdrożone; brak przewagi hybrydy, H3 dopiero do oceny: [wynik](hybrid_esp_validation.md) |
+| H: fizyka + historia | H0–H2/D1 i główny test H3 wykonane; M3 przegrywa z M1 w 8 kwalifikujących się wyłączeniach, H4 zamknięte: [H3](hybrid_esp_h3_validation.md) |
 
 Cały dotychczas oglądany miesiąc pozostaje okresem rozwojowym; nie odzyskujemy
 niezależnego holdoutu przez ponowny podział tych samych danych. Nowe obliczenia
